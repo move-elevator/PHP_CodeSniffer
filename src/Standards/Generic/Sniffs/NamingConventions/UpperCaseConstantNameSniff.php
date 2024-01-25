@@ -54,6 +54,22 @@ class UpperCaseConstantNameSniff implements Sniff
 
             $constName = $tokens[$constant]['content'];
 
+            if (
+                true === in_array(
+                    $constName,
+                    [
+                        'string',
+                        'integer',
+                        'int',
+                        'float',
+                        'bool',
+                        'boolean',
+                    ],
+                    true)
+            ) {
+                return;
+            }
+
             if (strtoupper($constName) !== $constName) {
                 if (strtolower($constName) === $constName) {
                     $phpcsFile->recordMetric($constant, 'Constant name case', 'lower');
